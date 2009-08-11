@@ -11,7 +11,7 @@ begin
     gem.homepage = "http://github.com/bitzesty/ooyala"
     gem.authors = ["Matthew Ford"]
     gem.add_dependency("httparty", ">=0.0.4")
-    gem.add_development_dependency("fakeweb", ">=1.2.5")
+    # gem.add_development_dependency("fakeweb", ">=1.2.5")
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 

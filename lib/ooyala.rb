@@ -25,17 +25,26 @@ module Ooyala
       ooyala_options[:api_codes] = {:partner => partner, :secret => secret}
     end
     
-    def query(o={})
-      self.get("/query", :query => o)
+    def query(options={}))
+      self.get("/query", :query => options)
     end
     
+    ##
+    # Options:
+    # rage:: String:: "0-4"
+    # resolution:: String:: "320x240" 
     def thumbnails(embed_code, options={})
       raise NoEmmbedCode if embed_code.blank?
       opts = {"embedCode" => embed_code, "range" =>"0-25", "resolution" =>"600x400"}.merge(options)      
       self.get("/thumbnails", :query  => opts)
     end
     
-    # this is a get - note sure why it's not a put or at least an overloaded post
+    ##
+    # Options:
+    # title:: String
+    # description:: String
+    # status:: String - "live", "paused" or "deleted" - Setting status to deleted deletes the video or channel.
+    # hostedAt:: String - The URL for the main page the video or channel is embedded on. 
     def edit(embed_code, options={})
       raise NoEmmbedCode if embed_code.blank?
       status_options = ['live', 'paused', 'deleted']
