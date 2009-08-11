@@ -2,6 +2,12 @@
 
 Ruby gem to access the Ooyala API
 
+== TODO
+
+* finish implementing api
+* find out why there are so many sig mismatches (seemingly random)
+* use fakeweb
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
