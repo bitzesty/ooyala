@@ -25,7 +25,7 @@ module Ooyala
       ooyala_options[:api_codes] = {:partner => partner, :secret => secret}
     end
     
-    def query(options={}))
+    def query(options={})
       self.get("/query", :query => options)
     end
     
