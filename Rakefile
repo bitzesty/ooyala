@@ -5,11 +5,13 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "ooyala"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Ruby gem to access the Ooyala API}
+    gem.description = %Q{Ruby gem to access the Ooyala API}
     gem.email = "matthew.c.ford@gmail.com"
     gem.homepage = "http://github.com/bitzesty/ooyala"
     gem.authors = ["Matthew Ford"]
+    gem.add_dependency("httparty", ">=0.0.4")
+    gem.add_development_dependency("fakeweb", ">=1.2.5")
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 
@@ -17,38 +19,19 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
 end
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/*_test.rb'
-  test.verbose = true
-end
-
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/*_test.rb'
-    test.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
-end
-
 begin
   require 'cucumber/rake/task'
-  Cucumber::Rake::Task.new(:features)
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = "--format pretty"
+    t.rcov = true
+    t.rcov_opts = %w{--exclude features\/}
+  end
 rescue LoadError
   task :features do
-    abort "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
+    abort "Cucumber or rcov is not available. In order to run features, you must: sudo gem install cucumber relevance-rcov"
   end
 end
-
-
-
-task :default => :test
+task :default => :features
 
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
