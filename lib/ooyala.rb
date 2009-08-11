@@ -8,6 +8,7 @@ require 'hacks'
 
 module Ooyala
   class NoAPICodes < StandardError; end
+  class NoEmmbedCode < StandardError;end
   
   def self.included(base)
     base.send :include, HTTParty
@@ -25,6 +26,11 @@ module Ooyala
     
     def query(o={})
       self.get("/query", o)
+    end
+    
+    def thumbnails(embed_code, range="0-25", resolution="600x400")
+      raise NoEmmbedCode if embed_code.blank?
+      self.get("/thumbnails", :query  => {"embedCode" => embed_code, "range" => range, "resolution" => resolution})
     end
   end
 

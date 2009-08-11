@@ -6,8 +6,8 @@
 #         # avoid double query string on redirects [#12]
 #         unless @redirect
 #           new_uri.query = query_string(new_uri)
+#           puts new_uri
 #         end
-#         puts new_uri
 #         new_uri
 #       end
 #   end
