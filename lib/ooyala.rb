@@ -9,6 +9,7 @@ require 'hacks'
 module Ooyala
   class NoAPICodes < StandardError; end
   class NoEmmbedCode < StandardError;end
+  class InvalidStatus < StandardError;end
   
   def self.included(base)
     base.send :include, HTTParty
@@ -25,12 +26,24 @@ module Ooyala
     end
     
     def query(o={})
-      self.get("/query", o)
+      self.get("/query", :query => o)
     end
     
-    def thumbnails(embed_code, range="0-25", resolution="600x400")
+    def thumbnails(embed_code, options={})
       raise NoEmmbedCode if embed_code.blank?
-      self.get("/thumbnails", :query  => {"embedCode" => embed_code, "range" => range, "resolution" => resolution})
+      opts = {"embedCode" => embed_code, "range" =>"0-25", "resolution" =>"600x400"}.merge(options)      
+      self.get("/thumbnails", :query  => opts)
+    end
+    
+    # this is a get - note sure why it's not a put or at least an overloaded post
+    def edit(embed_code, options={})
+      raise NoEmmbedCode if embed_code.blank?
+      status_options = ['live', 'paused', 'deleted']
+      if options["status"]
+        raise InvalidStatus unless status_options.include?(options["status"])
+      end
+      opts = {"embedCode" => embed_code}.merge(options)
+      self.get("/edit", :query => opts)
     end
   end
 
