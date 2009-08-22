@@ -4,9 +4,13 @@ Ruby gem to access the Ooyala API
 
 == TODO
 
+* replace httparty as it's causing sig mismatches with the params
 * finish implementing api
-* find out why there are so many sig mismatches (seemingly random)
-* use fakeweb
+
+
+== Testing
+
+Create a YAML file in features/support/api.yml
 
 == Note on Patches/Pull Requests
  
