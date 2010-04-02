@@ -33,7 +33,7 @@ module HTTParty
       end
       
       digest = Digest::SHA256.digest(string_to_sign)
-      signature = Base64::encode64(digest).chomp.gsub(/=+$/, '')
+      signature = CGI.escape(Base64::encode64(digest).chomp.gsub(/=+$/, ''))
       q << "signature=#{signature}"
       options[:query] = q.join("&")
       
